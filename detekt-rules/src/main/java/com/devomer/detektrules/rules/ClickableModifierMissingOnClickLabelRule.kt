@@ -1,4 +1,4 @@
-package com.devomer.detektrules
+package com.devomer.detektrules.rules
 
 import io.gitlab.arturbosch.detekt.api.CodeSmell
 import io.gitlab.arturbosch.detekt.api.Config
@@ -13,10 +13,9 @@ class ClickableModifierMissingOnClickLabelRule(config: Config = Config.empty) : 
 
     override val issue = Issue(
         javaClass.simpleName,
-        Severity.Warning, // Veya erişilebilirlik ciddiyetine göre Severity.Defect
-        "Jetpack Compose .clickable modifier'ı kullanıldığında erişilebilirlik için `onClickLabel` parametresi sağlanmalıdır. " +
-            "Bu etiket, ekran okuyucuların tıklanabilir öğenin amacını kullanıcıya iletmesine yardımcı olur.",
-        Debt.FIVE_MINS // Bu sorunu düzeltmenin tahmini süresi
+        Severity.Warning,
+        "Accessibility Rule: onClickLabel parameter check on .clickable() modifier",
+        Debt.FIVE_MINS
     )
 
     private val clickableFunctionName = "clickable"
