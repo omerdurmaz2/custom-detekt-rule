@@ -14,18 +14,34 @@ import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Build
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Checkbox
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Slider
+import androidx.compose.material3.SliderState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateMapOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import com.devomer.customdetektrule.ui.theme.CustomDetektRuleTheme
 
@@ -45,9 +61,43 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AccessibilityTestComponents(modifier: Modifier) {
-    Column(modifier = modifier, verticalArrangement = Arrangement.spacedBy(12.dp)) {
+    Column(
+        modifier = modifier.verticalScroll(rememberScrollState()),
+        verticalArrangement = Arrangement.spacedBy(12.dp)
+    ) {
+        AccessibilityComponent("Image Button") {
+            Button(
+                onClick = {},
+                modifier = Modifier.padding(8.dp)
+            ) {
+                Image(
+                    painter = painterResource(R.drawable.baseline_share_24),
+                    colorFilter = ColorFilter.tint(Color.White),
+                    contentDescription = "Paylaş"
+                )
+            }
+        }
+
+        AccessibilityComponent("IconButton") {
+            IconButton(onClick = {}) {
+                Icon(Icons.Default.Build, contentDescription = "Ayarlar")
+            }
+        }
+
+
+
+        AccessibilityComponent("TextField, OutlinedTextField") {
+            TextField(
+                //modifier = Modifier.semantics { contentDescription ="Kullanıcı adı" },
+                onValueChange = {},
+                value = ""
+            )
+        }
+
+
         AccessibilityComponent("Clickable without onClickLabel") {
             Box(
                 modifier = Modifier
@@ -55,31 +105,32 @@ fun AccessibilityTestComponents(modifier: Modifier) {
                     .background(Color.Red)
                     .clickable(onClickLabel = "kayıt butonu") { }
             )
+
+            Text("hello world", modifier = Modifier.clickable(onClickLabel = "hello world") { })
         }
 
-        AccessibilityComponent("TextField, OutlinedTextField without label or contentDescription") {
-            TextField(
-                onValueChange = {},
-                value = "",
-                label = {
-                    Text("label text")
-                }
-            )
+
+
+
+        val sliderState =
+            remember { SliderState(value = 10f, valueRange = 0f..100f, onValueChangeFinished = {}) }
+
+        AccessibilityComponent("Slider") {
+            Slider(
+                state = sliderState,
+                modifier = Modifier.semantics { contentDescription = "Kredi yuzdesi" })
         }
 
-        AccessibilityComponent("Button with only image content") {
-            Button(onClick = {}) {
-                Image(
-                    painter = painterResource(R.drawable.ic_launcher_background),
-                    contentDescription = "deneme buton"
-                )
-            }
+
+        var isChecked by remember { mutableStateOf(false) }
+        AccessibilityComponent("Checkbox") {
+            Checkbox(checked = isChecked, onCheckedChange = {
+                isChecked = it
+            })
         }
 
-        AccessibilityComponent("Button with only image content") {
-            IconButton(onClick = {}) {
-                Icon(Icons.Default.Build, contentDescription = null)
-            }
+        AccessibilityComponent("Radio Button") {
+
         }
     }
 }

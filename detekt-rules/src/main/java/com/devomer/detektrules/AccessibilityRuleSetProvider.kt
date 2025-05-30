@@ -1,8 +1,8 @@
 package com.devomer.detektrules
 
 import com.devomer.detektrules.rules.ClickableModifierMissingOnClickLabelRule
-import com.devomer.detektrules.rules.IconOnlyButtonMissingAccessibilityLabelRule
-import com.devomer.detektrules.rules.TextFieldMissingLabelOrContentDescriptionRule
+import com.devomer.detektrules.rules.ImageButtonMissingAccessibilityLabel
+import com.devomer.detektrules.rules.TextFieldMissingAccessibilityLabel
 import io.gitlab.arturbosch.detekt.api.Config
 import io.gitlab.arturbosch.detekt.api.RuleSet
 import io.gitlab.arturbosch.detekt.api.RuleSetProvider
@@ -14,8 +14,8 @@ class AccessibilityRuleSetProvider : RuleSetProvider {
         ruleSetId,
         listOf(
             ClickableModifierMissingOnClickLabelRule(config),
-            TextFieldMissingLabelOrContentDescriptionRule(config),
-            IconOnlyButtonMissingAccessibilityLabelRule(config)
+            TextFieldMissingAccessibilityLabel(config),
+            ImageButtonMissingAccessibilityLabel(config)
         )
     )
 }

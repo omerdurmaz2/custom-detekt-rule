@@ -4,7 +4,7 @@ import io.gitlab.arturbosch.detekt.api.*
 import org.jetbrains.kotlin.psi.*
 import org.jetbrains.kotlin.psi.psiUtil.collectDescendantsOfType
 
-class TextFieldMissingLabelOrContentDescriptionRule(config: Config = Config.empty) : Rule(config) {
+class TextFieldMissingAccessibilityLabel(config: Config = Config.empty) : Rule(config) {
 
     override val issue = Issue(
         javaClass.simpleName,

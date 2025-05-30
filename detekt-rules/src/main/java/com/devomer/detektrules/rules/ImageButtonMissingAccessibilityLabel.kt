@@ -4,12 +4,14 @@ import io.gitlab.arturbosch.detekt.api.*
 import org.jetbrains.kotlin.psi.*
 import org.jetbrains.kotlin.psi.psiUtil.collectDescendantsOfType
 
-class IconOnlyButtonMissingAccessibilityLabelRule(config: Config = Config.empty) : Rule(config) {
+class ImageButtonMissingAccessibilityLabel(config: Config = Config.empty) : Rule(config) {
 
     override val issue = Issue(
         javaClass.simpleName,
         Severity.Warning,
-        "Sadece Image içeren Button'larda, Image'ın contentDescription'ı veya Button'un kendisine ait bir erişilebilirlik etiketi (Modifier.semantics ile) sağlanmalıdır.",
+        "Button / IconButton 'ların içerisinde eğer sadece Image ya da Icon kullanılıyorsa " +
+                "contentDescription değeri null ya da empty verilmemelidir. Ya da buttona " +
+                "'Modifier.semantics' ile bir contentDescription tanımlanmalıdır.",
         Debt.TEN_MINS
     )
 
@@ -47,7 +49,8 @@ class IconOnlyButtonMissingAccessibilityLabelRule(config: Config = Config.empty)
             CodeSmell(
                 issue,
                 Entity.from(expression),
-                "Bir icon/image button oluşturdunuz ama contentDescription değeriniz null ya da empty ayarlanmış. erişilebilirlik için lütfen contentDescription tanımlayın"
+                "Bir Button/IconButton oluşturdunuz ama contentDescription değeriniz null " +
+                        "ya da empty ayarlanmış. Erişilebilirlik için lütfen contentDescription tanımlayın!"
             )
         )
     }

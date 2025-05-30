@@ -801,7 +801,7 @@ accessibility:
 
   ClickableModifierMissingOnClickLabelRule:
     active: true
-  TextFieldMissingLabelOrContentDescriptionRule:
+  TextFieldMissingAccessibilityLabel:
     active: true
-  IconOnlyButtonMissingAccessibilityLabelRule:
+  ImageButtonMissingAccessibilityLabel:
     active: true
