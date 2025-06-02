@@ -15,9 +15,12 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Build
+import androidx.compose.material.icons.filled.Call
+import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Checkbox
@@ -62,6 +65,7 @@ class MainActivity : ComponentActivity() {
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
+@Suppress("LongMethod")
 @Composable
 fun AccessibilityTestComponents(modifier: Modifier) {
     Column(
@@ -91,7 +95,7 @@ fun AccessibilityTestComponents(modifier: Modifier) {
 
         AccessibilityComponent("TextField, OutlinedTextField") {
             TextField(
-                //modifier = Modifier.semantics { contentDescription ="Kullanıcı adı" },
+                modifier = Modifier.semantics { contentDescription = "Kullanıcı adı" },
                 onValueChange = {},
                 value = ""
             )
@@ -102,15 +106,16 @@ fun AccessibilityTestComponents(modifier: Modifier) {
             Box(
                 modifier = Modifier
                     .size(60.dp)
-                    .background(Color.Red)
-                    .clickable(onClickLabel = "kayıt butonu") { }
-            )
+                    .clickable() { }
+            ) {
+                Box(
+                    modifier = Modifier
+                        .size(50.dp)
+                        .background(Color.Red, CircleShape))
 
-            Text("hello world", modifier = Modifier.clickable(onClickLabel = "hello world") { })
+                Text("arama yap")
+            }
         }
-
-
-
 
         val sliderState =
             remember { SliderState(value = 10f, valueRange = 0f..100f, onValueChangeFinished = {}) }
@@ -133,6 +138,11 @@ fun AccessibilityTestComponents(modifier: Modifier) {
 
         }
     }
+}
+
+@Composable
+fun ClickableSubComponent() {
+    Text("arama yap")
 }
 
 

@@ -1,6 +1,6 @@
 package com.devomer.detektrules
 
-import com.devomer.detektrules.rules.ClickableModifierMissingOnClickLabelRule
+import com.devomer.detektrules.rules.ClickableElementMissingAccessibilityLabel
 import com.devomer.detektrules.rules.ImageButtonMissingAccessibilityLabel
 import com.devomer.detektrules.rules.TextFieldMissingAccessibilityLabel
 import io.gitlab.arturbosch.detekt.api.Config
@@ -13,7 +13,7 @@ class AccessibilityRuleSetProvider : RuleSetProvider {
     override fun instance(config: Config): RuleSet = RuleSet(
         ruleSetId,
         listOf(
-            ClickableModifierMissingOnClickLabelRule(config),
+            ClickableElementMissingAccessibilityLabel(config),
             TextFieldMissingAccessibilityLabel(config),
             ImageButtonMissingAccessibilityLabel(config)
         )

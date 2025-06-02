@@ -799,7 +799,7 @@ style:
 accessibility:
   active: true
 
-  ClickableModifierMissingOnClickLabelRule:
+  ClickableElementMissingAccessibilityLabel:
     active: true
   TextFieldMissingAccessibilityLabel:
     active: true
