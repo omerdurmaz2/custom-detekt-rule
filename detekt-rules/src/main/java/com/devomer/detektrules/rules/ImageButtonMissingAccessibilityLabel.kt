@@ -9,9 +9,9 @@ class ImageButtonMissingAccessibilityLabel(config: Config = Config.empty) : Rule
     override val issue = Issue(
         javaClass.simpleName,
         Severity.Warning,
-        "Button / IconButton 'ların içerisinde eğer sadece Image ya da Icon kullanılıyorsa " +
-                "contentDescription değeri null ya da empty verilmemelidir. Ya da buttona " +
-                "'Modifier.semantics' ile bir contentDescription tanımlanmalıdır.",
+        "For accessibility, Buttons/IconButtons containing only an Image or Icon need a " +
+                "description. Provide this via the Image/Icon's contentDescription or on the " +
+                "Button/IconButton using Modifier.semantics { contentDescription = \\\"...\\\" }.",
         Debt.TEN_MINS
     )
 
@@ -49,8 +49,10 @@ class ImageButtonMissingAccessibilityLabel(config: Config = Config.empty) : Rule
             CodeSmell(
                 issue,
                 Entity.from(expression),
-                "Bir Button/IconButton oluşturdunuz ama contentDescription değeriniz null " +
-                        "ya da empty ayarlanmış. Erişilebilirlik için lütfen contentDescription tanımlayın!"
+                "Accessibility label missing for this icon-only Button/IconButton. " +
+                        "Please set the contentDescription for its inner Image/Icon, or add a " +
+                        "contentDescription to the Button itself via Modifier.semantics " +
+                        "{ contentDescription = \\\"...\\\" }."
             )
         )
     }
@@ -127,7 +129,9 @@ class ImageButtonMissingAccessibilityLabel(config: Config = Config.empty) : Rule
                         val rhs = statement.right
                         if (rhs != null && rhs.text != "null") {
                             if (rhs is KtStringTemplateExpression) {
-                                if (rhs.entries.isNotEmpty() || (rhs.text != "\"\"" && rhs.text != "\"\"\"\"\"\"")) {
+                                if (rhs.entries.isNotEmpty() || (rhs.text != "\"\""
+                                            && rhs.text != "\"\"\"\"\"\"")
+                                ) {
                                     return true
                                 }
                             } else {

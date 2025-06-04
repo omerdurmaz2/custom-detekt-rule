@@ -10,12 +10,16 @@ class ClickableElementMissingAccessibilityLabel(config: Config = Config.empty) :
     override val issue = Issue(
         javaClass.simpleName,
         Severity.Warning,
-        "\"Tıklanabilir öğelerin erişilebilirlik etiketi eksik olmamalıdır. Öğenin " +
-                "işlevini belirtmek için `.clickable` modifier'ına `onClickLabel` parametresi " +
-                "ekleyin ya da içeriğinin (anlamlı `Text`, `contentDescription`'lı `Image`/`Icon` " +
-                "veya kendini açıklayan özel bir bileşen ile) kendini açıklamasını sağlayın." +
-                " İçerik yalnızca dekoratif/yapısal ise ve bu yollarla bir açıklama sunmuyorsa, " +
-                "`onClickLabel` zorunludur.\"\n",
+        "For accessibility, any clickable element must have a clear label. This label can" +
+                " be provided by: " +
+                "\n1) the onClickLabel parameter in the .clickable modifier, " +
+                "\n2) a contentDescription set on the element itself via Modifier.semantics, OR " +
+                "\n3) self-describing content within the element (e.g., meaningful Text, an Image/Icon " +
+                "with its own contentDescription, or a custom Composable that manages its own " +
+                "accessibility). " +
+                "\nIf the content is purely decorative/structural and does not provide" +
+                " a description through these means, the onClickLabel parameter becomes mandatory " +
+                "for the .clickable modifier.",
         Debt.TEN_MINS
     )
 
@@ -218,9 +222,9 @@ class ClickableElementMissingAccessibilityLabel(config: Config = Config.empty) :
             CodeSmell(
                 issue,
                 Entity.from(clickableCallExpression),
-                "Bu `.clickable` modifier'ı için `onClickLabel` parametresi eksik. " +
-                        "İçeriği analiz edilemedi veya ana Composable bulunamadı. " +
-                        "Erişilebilirlik için lütfen `onClickLabel` sağlayın."
+                "Missing onClickLabel for this .clickable modifier. Unable to analyze " +
+                        "content for an alternative description or determine the parent Composable. " +
+                        "Please provide an onClickLabel to ensure accessibility"
             )
         )
     }
@@ -233,9 +237,10 @@ class ClickableElementMissingAccessibilityLabel(config: Config = Config.empty) :
             CodeSmell(
                 issue,
                 Entity.from(clickableCallExpression),
-                "`${parentComposableCall.calleeExpression?.text}` Composable'ına uygulanan bu tıklanabilir öğe için `onClickLabel` sağlanmamış " +
-                        "ve içeriğinde de doğrudan bir metin (Text) veya erişilebilir bir açıklama (contentDescription) bulunmuyor. " +
-                        "Lütfen `onClickLabel` ekleyin veya içeriği erişilebilir hale getirin."
+                "This clickable element is missing an accessible label. Please provide an " +
+                        "onClickLabel in the .clickable modifier, or set a contentDescription on the" +
+                        " element via Modifier.semantics, or ensure its content is self-describing " +
+                        "(e.g., via Text, or an Image/Icon with its own contentDescription)."
             )
         )
     }

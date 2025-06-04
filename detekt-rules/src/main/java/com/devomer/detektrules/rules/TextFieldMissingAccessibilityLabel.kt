@@ -9,8 +9,9 @@ class TextFieldMissingAccessibilityLabel(config: Config = Config.empty) : Rule(c
     override val issue = Issue(
         javaClass.simpleName,
         Severity.Warning,
-        "TextField/OutlinedTextField için `label` parametresi veya `Modifier.semantics` içinde `contentDescription` sağlanmalıdır. " +
-                "Bu, ekran okuyucuların giriş alanının amacını kullanıcıya iletmesine yardımcı olur.",
+        "TextField/OutlinedTextField composables require a label parameter or a " +
+                "contentDescription via Modifier.semantics to help screen readers communicate " +
+                "their purpose.",
         Debt.TEN_MINS
     )
 
@@ -52,8 +53,8 @@ class TextFieldMissingAccessibilityLabel(config: Config = Config.empty) : Rule(c
             CodeSmell(
                 issue,
                 Entity.from(expression),
-                "TextField/OutlinedTextField (${callee.text}) için `label` parametresi veya " +
-                        "`Modifier.semantics` içinde geçerli bir `contentDescription` sağlanmalıdır."
+                "This TextField/OutlinedTextField requires either a label parameter or a " +
+                        "valid contentDescription via Modifier.semantics for accessibility."
             )
         )
     }

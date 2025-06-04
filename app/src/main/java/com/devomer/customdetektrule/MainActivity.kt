@@ -31,6 +31,7 @@ import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Slider
 import androidx.compose.material3.SliderState
+import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
@@ -111,9 +112,10 @@ fun AccessibilityTestComponents(modifier: Modifier) {
                 Box(
                     modifier = Modifier
                         .size(50.dp)
-                        .background(Color.Red, CircleShape))
+                        .background(Color.Red, CircleShape)
+                )
 
-                Text("arama yap")
+                //Text("arama yap")
             }
         }
 
@@ -127,15 +129,20 @@ fun AccessibilityTestComponents(modifier: Modifier) {
         }
 
 
-        var isChecked by remember { mutableStateOf(false) }
         AccessibilityComponent("Checkbox") {
-            Checkbox(checked = isChecked, onCheckedChange = {
-                isChecked = it
-            })
+            var isChecked by remember { mutableStateOf(false) }
+            Checkbox(
+                checked = isChecked, onCheckedChange = {
+                    isChecked = it
+                },
+                modifier = Modifier.semantics { contentDescription = "sözleşmeyi kabul ediyorum" })
         }
 
-        AccessibilityComponent("Radio Button") {
-
+        AccessibilityComponent("Switch") {
+            var isChecked by remember { mutableStateOf(false) }
+            Switch(checked = isChecked, onCheckedChange = {
+                isChecked = it
+            }, modifier = Modifier.semantics { contentDescription = "uygulama bildirimleri" })
         }
     }
 }
